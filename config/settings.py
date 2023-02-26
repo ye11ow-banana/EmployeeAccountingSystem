@@ -75,6 +75,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+logs_config = {
+    'sink': os.path.join(BASE_DIR, 'logs') + '/{time}.log',
+    'format': '{time} {level} {message}',
+    'level': 'DEBUG',
+    'rotation': '100 KB',
+    'compression': 'zip',
+    'serialize': False
+}
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
