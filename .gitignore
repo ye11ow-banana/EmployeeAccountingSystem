@@ -1,8 +1,8 @@
 .idea/
 .DS_Store
 __pycache__/
-media/
-locale/
-setenv.sh
+media/*
+.env
 .mypy_cache/
 .coverage
+logs/*

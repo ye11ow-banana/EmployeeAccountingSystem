@@ -1,5 +1,5 @@
 from loguru import logger
 
-from config.settings import logs_config
+from django.conf import settings
 
-logger.add(**logs_config)
+logger.add(**settings.LOGS_CONFIG)

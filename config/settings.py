@@ -2,14 +2,20 @@ import os
 import sys
 from pathlib import Path
 
+from decouple import config
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '0.0.0.0',
+]
 
 
 INSTALLED_APPS = [
@@ -55,8 +61,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRES_NAME'),
+        'USER': config('POSTGRES_USER'),
+        'PASSWORD': config('POSTGRES_PASSWORD'),
+        'HOST': config('POSTGRES_HOST'),
+        'PORT': config('POSTGRES_PORT', cast=int),
     }
 }
 
@@ -75,10 +85,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-logs_config = {
+LOGS_CONFIG = {
     'sink': os.path.join(BASE_DIR, 'logs') + '/{time}.log',
     'format': '{time} {level} {message}',
-    'level': 'DEBUG',
+    'level': config('LOG_LEVEL'),
     'rotation': '100 KB',
     'compression': 'zip',
     'serialize': False
